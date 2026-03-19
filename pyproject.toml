@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycache"
+version = "0.1.0"
+description = "A caching library with pluggable eviction strategies"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+include = ["pycache*"]

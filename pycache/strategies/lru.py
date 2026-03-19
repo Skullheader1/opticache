@@ -1,0 +1,27 @@
+from collections import OrderedDict
+from typing import Any
+
+from .base import EvictionStrategy
+
+class LRUStrategy(EvictionStrategy):
+    """
+    LRU (Least Recently Used) eviction strategy implementation.
+    This strategy evicts the least recently accessed key when the cache exceeds its capacity.
+    """
+    def __init__(self):
+        # OrderedDict has O(1) time complexity
+        self._order = OrderedDict()
+
+    def add(self, key):
+        self._order[key] = None
+
+    def access(self, key):
+        self._order.move_to_end(key)
+
+    def evict(self) -> Any:
+        if not self._order:
+            raise IndexError("No keys to evict")
+        return self._order.popitem(last=False)[0]
+
+    def remove(self, key):
+        del self._order[key]
