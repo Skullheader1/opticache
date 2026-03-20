@@ -154,6 +154,12 @@ pip install -r ./tests/requirements.txt
 pip install -e .
 pytest
 ```
+Run the linting with:
+```bash
+pip install flake8
+pip install -e .
+flake8 . --exclude=.venv
+```
 
 ## Usage of AI
 - Github Copilot: Used in PyCharm for small code suggestions
