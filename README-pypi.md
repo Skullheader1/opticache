@@ -1,6 +1,6 @@
 # opticache
 
-A Python caching library with pluggable eviction strategies and a optimization tests to demonstrate the impact of data structure choices.
+A Python caching library with pluggable eviction strategies.
 
 ## Installation
 
