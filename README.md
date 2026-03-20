@@ -79,7 +79,7 @@ pip install -e .
 python optimization_tests/main.py
 ```
 
-### Optimizations and effects
+### Strategy Optimizations and effects
 - `LRUStrategy`:
   - A normal Array shifts elements on access -> O(1) add time, O(n) access time,  O(n) evict time and O(n) remove time.
   - Optimized through a OrderedDict: A HashMap + Doubly Linked List allows O(1) time complexity for every operation.
@@ -91,3 +91,7 @@ python optimization_tests/main.py
   - Optimized through a Deque: A doubly linked list allows O(1) popleft instead of shifting -> O(1) add time, O(1) access time, O(1) evict time and O(n) remove time.
     - Collections.deque is implemented in C, making it much faster than a regular python list
   - Optimized through a OrderedDict: A HashMap + Doubly Linked List allows O(1) time complexity for every operation, but is slower than a Deque due to the overhead of maintaining the hash map.
+
+### Other optimizations:
+- Threading: The `Cache` class is thread-safe and can be safely accessed by python threading.Thread.
+- Memoization: Using the `@cache.memoize` decorator allows for automatic caching of function results, leading to significant performance improvements for expensive function calls with repeated arguments.
