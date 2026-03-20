@@ -15,7 +15,7 @@ authors = [
 keywords = ["cache", "caching", "lru", "lfu", "fifo", "sieve", "eviction"]
 
 [project.urls]
-Repository = "https://github.com/Skullheader1/pycache"
+Repository = "https://github.com/Skullheader1/opticache"
 
 [tool.setuptools.packages.find]
-include = ["pycache*"]
+include = ["opticache*"]

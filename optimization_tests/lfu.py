@@ -4,8 +4,8 @@ from typing import Any
 
 import random
 
-from pycache.strategies import EvictionStrategy, LFUStrategy
-from pycache import Cache
+from opticache.strategies import EvictionStrategy, LFUStrategy
+from opticache import Cache
 
 
 class LFUStrategyDict(EvictionStrategy):

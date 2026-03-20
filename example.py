@@ -1,8 +1,8 @@
 import threading
 import time
 
-from pycache import Cache
-from pycache.strategies import LRUStrategy, LFUStrategy
+from opticache import Cache
+from opticache.strategies import LRUStrategy, LFUStrategy
 
 print("=== Basic cache operations example ===\n")
 

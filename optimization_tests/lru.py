@@ -3,8 +3,8 @@ import random
 import time
 from typing import Any
 
-from pycache.strategies import EvictionStrategy, LRUStrategy
-from pycache import Cache
+from opticache.strategies import EvictionStrategy, LRUStrategy
+from opticache import Cache
 
 
 class LRUStrategyList(EvictionStrategy):

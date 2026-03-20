@@ -1,11 +1,11 @@
-from pycache import Cache
-from pycache.strategies import (FIFOStrategy,
-                                LRUStrategy,
-                                LFUStrategy,
-                                FIFOStrategyFastDelete,
-                                MRUStrategy,
-                                RandomStrategy,
-                                SIEVEStrategy)
+from opticache import Cache
+from opticache.strategies import (FIFOStrategy,
+                                  LRUStrategy,
+                                  LFUStrategy,
+                                  FIFOStrategyFastDelete,
+                                  MRUStrategy,
+                                  RandomStrategy,
+                                  SIEVEStrategy)
 
 
 def test_fifo_eviction():

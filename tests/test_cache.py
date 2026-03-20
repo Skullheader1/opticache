@@ -1,7 +1,7 @@
 import pytest
 
-from pycache import Cache
-from pycache.strategies import FIFOStrategy
+from opticache import Cache
+from opticache.strategies import FIFOStrategy
 
 
 @pytest.fixture

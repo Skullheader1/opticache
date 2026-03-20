@@ -1,7 +1,7 @@
 from collections import defaultdict, OrderedDict
 from typing import Any
 
-from pycache.strategies.base import EvictionStrategy
+from opticache.strategies.base import EvictionStrategy
 
 
 class LFUStrategy(EvictionStrategy):

@@ -4,10 +4,10 @@ from typing import Any
 
 import random
 
-from pycache.strategies import (EvictionStrategy,
-                                FIFOStrategy,
-                                FIFOStrategyFastDelete)
-from pycache import Cache
+from opticache.strategies import (EvictionStrategy,
+                                  FIFOStrategy,
+                                  FIFOStrategyFastDelete)
+from opticache import Cache
 
 
 class FIFOStrategyList(EvictionStrategy):
