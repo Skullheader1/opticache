@@ -1,5 +1,5 @@
 /.venv/
-/pycache.egg-info/
+/opticache.egg-info/
 *.temp
 /__pycache__/
 *.pyc

@@ -1,7 +1,7 @@
 from collections import deque
 from typing import Any
 
-from opticache.strategies.base import EvictionStrategy
+from .base import EvictionStrategy
 
 
 class FIFOStrategy(EvictionStrategy):
