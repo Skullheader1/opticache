@@ -5,7 +5,7 @@ A Python caching library with pluggable eviction strategies and a optimization t
 ## Installation
 
 ```bash
-pip install -e .
+pip install opticache
 ```
 
 ## Quick start

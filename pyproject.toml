@@ -3,10 +3,10 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pycache"
-version = "0.1.0"
+name = "opticache"
+version = "0.1.2"
 description = "A caching library with pluggable eviction strategies"
-readme = "README.md"
+readme = "READMe-pypi.md"
 requires-python = ">=3.10"
 license = "MIT"
 authors = [
