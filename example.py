@@ -70,12 +70,19 @@ cache4 = Cache(LFUStrategy, capacity=10)
 print("\n\n=== Memoization example ===\n")
 
 @cache4.memoize()
-def calculate(x,y):
-    print(f"Actually Calculating {x}^{y}...")
-    time.sleep(1) # Simulate an expensive calculation
-    return x ** y
+def fibonacci(n):
+    if n <= 1:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
 
+print("First call to fibonacci(35):")
+start = time.time()
 #This will calculate the result and cache it
-print("2^10 = " + str(calculate(2,10)))
+print("fibonacci(35) = " + str(fibonacci(35)))
+print(f"Time taken: {time.time() - start:.4f} seconds")
+
+print("\nSecond call to fibonacci(35):")
+start = time.time()
 #This will get the cached result without calculating it again
-print("2^10 = " + str(calculate(2,10)))
+print("fibonacci(35) = " + str(fibonacci(35)))
+print(f"Time taken: {time.time() - start:.4f} seconds")
