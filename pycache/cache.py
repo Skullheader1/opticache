@@ -7,6 +7,8 @@ _MISSING = object()
 
 class Cache:
     def __init__(self, strategy: type[EvictionStrategy], capacity: int):
+        if capacity <= 0:
+            raise ValueError("Capacity must be a positive integer")
         self._strategy = strategy()
         self._capacity = capacity
         # Python dictionaries are insertion ordered and have O(1) time complexity on `get`, `set`, `del` and `in` since python 3.7
