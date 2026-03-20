@@ -1,4 +1,4 @@
-# pycache
+# opticache
 
 A Python caching library with pluggable eviction strategies and a optimization tests to demonstrate the impact of data structure choices.
 
@@ -26,8 +26,8 @@ pip install opticache
 ### Usage
 
 ```python
-from pycache import Cache
-from pycache.strategies import (
+from opticache import Cache
+from opticache.strategies import (
     LRUStrategy,
     LFUStrategy,
     FIFOStrategy,
@@ -47,7 +47,8 @@ cache_sieve = Cache(SIEVEStrategy, capacity=500)
 Implement the `EvictionStrategy` ABC to create your own:
 
 ```python
-from pycache.strategies.base import EvictionStrategy
+from opticache.strategies.base import EvictionStrategy
+
 
 class MyStrategy(EvictionStrategy):
     def add(self, key):
@@ -66,7 +67,9 @@ class MyStrategy(EvictionStrategy):
         """Remove a key from tracking (manual delete)."""
         ...
 
-from pycache import Cache
+
+from opticache import Cache
+
 cache = Cache(MyStrategy, capacity=1000)
 ```
 
