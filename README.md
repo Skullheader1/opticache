@@ -147,5 +147,13 @@ A normal Dict tracks frequency per key, but evict needs to find the minimum O(n)
 - Threading: The `Cache` class is thread-safe and can be safely accessed by python threading.Thread.
 - Memoization: Using the `@cache.memoize` decorator allows for automatic caching of function results, leading to significant performance improvements for expensive function calls with repeated arguments.
 
+## Testing
+Run the tests with:
+```bash
+pip install -r ./tests/requirements.txt
+pip install -e .
+pytest
+```
+
 ## Usage of AI
 - Github Copilot: Used in PyCharm for small code suggestions
