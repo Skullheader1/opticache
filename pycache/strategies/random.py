@@ -15,10 +15,12 @@ class RandomStrategy(EvictionStrategy):
 
     def evict(self) -> Any:
         if not self._keys:
-            raise Exception("No keys to evict")
+            raise IndexError("No keys to evict")
         index = random.randint(0, len(self._keys) - 1)
+        key = self._keys[index]
         self._keys[index] = self._keys[-1]
-        return self._keys.pop()
+        self._keys.pop()
+        return key
 
     def remove(self, key):
         index = self._keys.index(key)
