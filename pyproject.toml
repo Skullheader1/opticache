@@ -6,7 +6,16 @@ build-backend = "setuptools.build_meta"
 name = "pycache"
 version = "0.1.0"
 description = "A caching library with pluggable eviction strategies"
+readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "Skullheader1"},
+]
+keywords = ["cache", "caching", "lru", "lfu", "fifo", "sieve", "eviction"]
+
+[project.urls]
+Repository = "https://github.com/Skullheader1/pycache"
 
 [tool.setuptools.packages.find]
 include = ["pycache*"]
