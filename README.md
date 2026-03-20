@@ -158,8 +158,8 @@ Run the linting with:
 ```bash
 pip install flake8
 pip install -e .
-flake8 . --exclude=.venv
+flake8 .
 ```
-
+Note: You may have to exclude .venv, __pycache__ and other local folders from linting. E.g. `flake8 . --exclude=.venv,__pycache__`
 ## Usage of AI
 - Github Copilot: Used in PyCharm for small code suggestions
