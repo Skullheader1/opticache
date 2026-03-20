@@ -72,7 +72,7 @@ cache = Cache(MyStrategy, capacity=1000)
 
 ## Optimization tests
 
-The project includes optimization tests to compare the performance of different approaches to implementing the same eviction strategy. <b>Those tests are not designed to how strengths and weaknesses of the strategy itself.</b> Run them with:
+The project includes optimization tests to compare the performance of different approaches to implementing the same eviction strategy. **Those tests are not designed to show strengths and weaknesses of the strategy itself.** Run them with:
 ```bash
 pip install -r ./optimization_tests/requirements.txt
 pip install -e .
@@ -80,18 +80,72 @@ python optimization_tests/main.py
 ```
 
 ### Strategy Optimizations and effects
-- `LRUStrategy`:
-  - A normal Array shifts elements on access -> O(1) add time, O(n) access time,  O(n) evict time and O(n) remove time.
-  - Optimized through a OrderedDict: A HashMap + Doubly Linked List allows O(1) time complexity for every operation.
-- `LFUStrategy`:
-  - A normal Dict tracks frequency per key, but evict needs to find the minimum -> O(1) add time, O(1) access time, O(n) evict time and O(1) remove time.
-  - Optimized through a Dict, a defaultdict(OrderedDict) and a min_freq integer pointer. The Dict maps keys to frequencies, the defaultdict groups keys by frequency and the min_freq points to the lowest active frequency -> O(1) time complexity for every operation.
-- `FIFOStrategy:`
-  - A normal Array shifts all elements on evict via pop(0) -> O(1) add time, O(1) access time, O(n) evict time and O(n) remove time.
-  - Optimized through a Deque: A doubly linked list allows O(1) popleft instead of shifting -> O(1) add time, O(1) access time, O(1) evict time and O(n) remove time.
-    - Collections.deque is implemented in C, making it much faster than a regular python list
-  - Optimized through a OrderedDict: A HashMap + Doubly Linked List allows O(1) time complexity for every operation, but is slower than a Deque due to the overhead of maintaining the hash map.
+
+#### FIFO (First in first out)
+
+A normal list shifts all elements on evict via `pop(0)`, making it O(n). Two optimized variants exist:
+ 
+- **Deque**: `collections.deque` (implemented in C) provides O(1) `popleft` instead of shifting, but `remove(key)` is still O(n).
+- **OrderedDict**: HashMap + Doubly Linked List gives O(1) for every operation, but has higher constant overhead than Deque.
+
+| Operation | List | Deque | OrderedDict |
+|---|---|---|---|
+| add | O(1) | O(1) | O(1) |
+| access | O(1) | O(1) | O(1) |
+| evict | O(n) | O(1) | O(1) |
+| remove | O(n) | O(n) | O(1) |
+
+**Test results** (100k operations, 5 iterations):
+
+| Operation | Deque | OrderedDict | List |
+|---|---|---|---|
+| Set | **0.18s** (fastest) | 0.21s (+16.7%) | 1.63s (+801.9%) |
+| Delete | 81.81s (+36489.2%) | **0.22s** (fastest) | 79.38s (+35404.7%) |
+
+**Result:** The Deque is the best choice for FIFO when `cache.delete()` is not frequently used, while the OrderedDict is better when frequent deletes on high capacity caches are expected.
+
+#### LRU (Least recently used)
+
+A normal list requires O(n) `remove` + `append` on every access. An `OrderedDict` provides O(1) `move_to_end`.
+
+| Operation | List | OrderedDict |
+|---|---|---|
+| add | O(1) | O(1) |
+| access | O(n) | O(1) |
+| evict | O(n) | O(1) |
+| remove | O(n) | O(1) |
+
+**Test results** (100k operations, 5 iterations):
+
+| Operation | Optimized | List-based | Speedup |
+|---|---|---|---|
+| Set | **0.046s** | 0.105s | 55.9% faster |
+| Get | **0.020s** | 0.020s | 1.4% faster |
+| Delete | **0.044s** | 15.591s | 99.7% faster |
+
+#### LFU (Least frequently used)
+A normal Dict tracks frequency per key, but evict needs to find the minimum O(n). Optimized through a Dict, a defaultdict(OrderedDict) and a min_freq integer pointer. The Dict maps keys to frequencies, the defaultdict groups keys by frequency and the min_freq points to the lowest active frequency
+ 
+| Operation | Dict | Optimized |
+|---|---|---|
+| add | O(1) | O(1) |
+| access | O(1) | O(1) |
+| evict | O(n) | O(1) |
+| remove | O(1) | O(1) |
+
+**Test results** (100k operations, 5 iterations):
+
+| Operation | Optimized | Dict-based | Speedup |
+|---|---|---|---|
+| Set | **0.049s** | 16.602s | 99.7% faster |
+| Get | **0.020s** | 0.020s | 2.1% faster |
+| Delete | 0.054s | **0.039s** | 35.5% slower |
+
+**Result:** The optimized LFU is significantly faster for set operations due to O(1) eviction, but slightly slower for delete due to the overhead of maintaining the additional data structures. In total, the optimized version is a clear improvement and the loss in delete performance is a good tradeoff.
 
 ### Other optimizations:
 - Threading: The `Cache` class is thread-safe and can be safely accessed by python threading.Thread.
 - Memoization: Using the `@cache.memoize` decorator allows for automatic caching of function results, leading to significant performance improvements for expensive function calls with repeated arguments.
+
+## Usage of AI
+- Github Copilot: Used in PyCharm for small code suggestions
