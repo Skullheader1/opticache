@@ -1,11 +1,14 @@
-#Last recently used strategy
+# Last recently used strategy
 import time
 from typing import Any
 
 import random
 
-from pycache.strategies import EvictionStrategy, FIFOStrategy, FIFOStrategyFastDelete
+from pycache.strategies import (EvictionStrategy,
+                                FIFOStrategy,
+                                FIFOStrategyFastDelete)
 from pycache import Cache
+
 
 class FIFOStrategyList(EvictionStrategy):
     def __init__(self):
@@ -15,7 +18,7 @@ class FIFOStrategyList(EvictionStrategy):
         self._queue.append(key)
 
     def access(self, key):
-        pass # Not used by FIFO
+        pass  # Not used by FIFO
 
     def evict(self) -> Any:
         if not self._queue:
@@ -24,6 +27,7 @@ class FIFOStrategyList(EvictionStrategy):
 
     def remove(self, key):
         self._queue.remove(key)
+
 
 def run_test(iterations, level):
     time1_set = 0
@@ -35,7 +39,7 @@ def run_test(iterations, level):
     time3_set = 0
     time3_get = 0
 
-    for l in range(iterations):
+    for _ in range(iterations):
         cache1 = Cache(FIFOStrategy, int(level/2))
         cache2 = Cache(FIFOStrategyList, int(level/2))
         cache3 = Cache(FIFOStrategyFastDelete, int(level/2))
@@ -82,7 +86,8 @@ def run_test(iterations, level):
             cache2.set(f'key{i}', f'value{i}')
             cache3.set(f'key{i}', f'value{i}')
 
-        # Random order of deletes to avoid best/worst case scenarios for list-based FIFO / deque-based FIFO
+        # Random order of deletes to avoid best/worst case scenarios
+        # for list-based FIFO / deque-based FIFO
         delete_order = list(range(level))
         random.shuffle(delete_order)
 
@@ -104,12 +109,14 @@ def run_test(iterations, level):
     def print_ranked(label, times):
         fastest_time = min(times.values())
         print(f"=== {label} ===")
-        for i, (name, t) in enumerate(sorted(times.items(), key=lambda x: x[1]), 1):
+        for i, (name, t) in enumerate(sorted(times.items(),
+                                             key=lambda x: x[1]), 1):
             if fastest_time == 0 or t == 0:
                 slower_pct = 0.0
             else:
                 slower_pct = (t - fastest_time) / fastest_time * 100
-            marker = " (fastest)" if t == fastest_time else f" (+{slower_pct:.1f}%)"
+            marker = " (fastest)" if t == fastest_time \
+                else f" (+{slower_pct:.1f}%)"
             print(f"  {i}. {name}: {t:.4f}s{marker}")
         print()
 
@@ -131,10 +138,15 @@ def run_test(iterations, level):
         "OrderedDict FIFO": time3_delete_existing,
     })
 
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("iterations", type=int, help="Number of iterations to run")
-    parser.add_argument("load", type=int, help="Number of items to load into the cache")
+    parser.add_argument("iterations",
+                        type=int,
+                        help="Number of iterations to run")
+    parser.add_argument("load",
+                        type=int,
+                        help="Number of items to load into the cache")
     args = parser.parse_args()
     run_test(args.iterations, args.load)

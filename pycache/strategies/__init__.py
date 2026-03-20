@@ -7,3 +7,7 @@ from .mru import MRUStrategy
 from .sieve import SIEVEStrategy
 from .random import RandomStrategy
 
+__all__ = [EvictionStrategy, LFUStrategy,
+           LRUStrategy, FIFOStrategy,
+           FIFOStrategyFastDelete, MRUStrategy,
+           SIEVEStrategy, RandomStrategy]

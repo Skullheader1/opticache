@@ -1,11 +1,13 @@
 from .base import EvictionStrategy
 
+
 class Node:
     def __init__(self, key):
         self.key = key
         self.visited = False
         self.prev = None
         self.next = None
+
 
 class SIEVEStrategy(EvictionStrategy):
     def __init__(self):

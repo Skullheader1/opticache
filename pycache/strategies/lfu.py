@@ -3,10 +3,12 @@ from typing import Any
 
 from pycache.strategies.base import EvictionStrategy
 
+
 class LFUStrategy(EvictionStrategy):
     """
     LFU (Least Frequently Used) eviction strategy implementation.
-    This strategy evicts the key that has been accessed the least number of times.
+    This strategy evicts the key
+    that has been accessed the least number of times.
     """
     def __init__(self):
         self._key_freq = {}

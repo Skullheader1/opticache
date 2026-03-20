@@ -3,6 +3,7 @@ from typing import Any
 
 from .base import EvictionStrategy
 
+
 class RandomStrategy(EvictionStrategy):
     def __init__(self):
         self._keys = []
@@ -11,7 +12,7 @@ class RandomStrategy(EvictionStrategy):
         self._keys.append(key)
 
     def access(self, key):
-        pass # Not used by Random
+        pass  # Not used by Random
 
     def evict(self) -> Any:
         if not self._keys:

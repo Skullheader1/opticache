@@ -3,10 +3,14 @@ from typing import Any
 
 from .base import EvictionStrategy
 
+
 class FIFOStrategyFastDelete(EvictionStrategy):
     """
-    FIFOStrategyFastDelete is a variant of the FIFO eviction strategy that is faster on deleting keys.
-    Use this if you expect to delete keys from the cache frequently. O(1) time complexity for deletes.
+    FIFOStrategyFastDelete is a variant of the FIFO eviction strategy
+    that is faster on deleting keys,
+    but slower in general.
+    Use this if you expect to delete keys from the cache frequently.
+    O(1) time complexity for deletes.
     """
     def __init__(self):
         self._order = OrderedDict()
@@ -15,7 +19,7 @@ class FIFOStrategyFastDelete(EvictionStrategy):
         self._order[key] = None
 
     def access(self, key):
-        pass # Not used by FIFO
+        pass  # Not used by FIFO
 
     def evict(self) -> Any:
         if not self._order:

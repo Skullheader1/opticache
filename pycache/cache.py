@@ -5,13 +5,15 @@ from .strategies import EvictionStrategy
 
 _MISSING = object()
 
+
 class Cache:
     def __init__(self, strategy: type[EvictionStrategy], capacity: int):
         if capacity <= 0:
             raise ValueError("Capacity must be a positive integer")
         self._strategy = strategy()
         self._capacity = capacity
-        # Python dictionaries are insertion ordered and have O(1) time complexity on `get`, `set`, `del` and `in` since python 3.7
+        # Python dictionaries are insertion ordered and have
+        # O(1) time complexity on `get`, `set`, `del` and `in` since python 3.7
         self._cache = {}
         self._lock = Lock()
 
@@ -43,7 +45,8 @@ class Cache:
         Args:
             key (str): The key to be retrieved from the cache.
         Returns:
-            Any: The value associated with the key if it exists in the cache, otherwise None.
+            Any: The value associated with the key
+            if it exists in the cache, otherwise None.
         """
         with self._lock:
             result = self._get(key)
@@ -51,10 +54,13 @@ class Cache:
                 return None
             return result
 
-
     def set(self, key: str, value: Any):
         """
-        Sets a key-value pair in the cache. If the key already exists, the value will be updated. If the cache exceeds its capacity, the set eviction strategy will be applied to remove an existing key before adding the new key-value pair.
+        Sets a key-value pair in the cache.
+        If the key already exists, the value will be updated.
+        If the cache exceeds its capacity,
+        the set eviction strategy will be applied to remove an existing key
+        before adding the new key-value pair.
         Args:
             key (str): The key to be set in the cache.
             value (Any): The value to be associated with the key in the cache.
@@ -64,13 +70,13 @@ class Cache:
 
     def delete(self, key: str):
         """
-        Deletes a key from the cache if it exists and updates the eviction strategy accordingly.
+        Deletes a key from the cache if it exists and
+        updates the eviction strategy accordingly.
         Args:
             key (str): The key to be deleted.
         """
         with self._lock:
             self._delete(key)
-
 
     def clear(self):
         """
@@ -78,7 +84,8 @@ class Cache:
         """
         with self._lock:
             self._cache.clear()
-            self._strategy = self._strategy.__class__()  # Reset strategy object
+            # Reset strategy object
+            self._strategy = self._strategy.__class__()
 
     # Allows checking the number of items in the cache with len()
     def __len__(self):
@@ -93,7 +100,9 @@ class Cache:
     # Allows iterations with the for loop
     def __iter__(self):
         with self._lock:
-            items = list(self._cache.items()) # Create a snapshot of the current items to avoid a blocked thread-lock during iteration
+            # Create a snapshot of the current items
+            # to avoid a blocked thread-lock during iteration
+            items = list(self._cache.items())
         for key, value in items:
             yield key, value
 
@@ -114,7 +123,6 @@ class Cache:
     def __delitem__(self, key):
         with self._lock:
             self._delete(key)
-
 
     def memoize(self):
         """

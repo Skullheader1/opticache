@@ -3,10 +3,12 @@ from typing import Any
 
 from .base import EvictionStrategy
 
+
 class LRUStrategy(EvictionStrategy):
     """
     LRU (Least Recently Used) eviction strategy implementation.
-    This strategy evicts the least recently accessed key when the cache exceeds its capacity.
+    This strategy evicts the least recently accessed key
+    when the cache exceeds its capacity.
     """
     def __init__(self):
         # OrderedDict has O(1) time complexity
